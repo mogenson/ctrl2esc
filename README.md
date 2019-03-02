@@ -13,3 +13,6 @@ The `caps2esc` utility for Linux does this perfectly. `esc2ctrl` is my attempt t
 4. Press *Input method* -> *Manage input methods* and select `esc2ctrl` in `chrome://settings/languages`
 5. Enable *Show input options in the shelf*
 6. Select `EN esc2ctrl` in the Chrome OS shelf, near the notifications
+
+## Caveats
+The Chrome [input method editor](https://developer.chrome.com/extensions/input_ime) system only provides a valid context for text field entries. `esc2ctrl` will work for apps that are text fields like the [Secure Shell](https://chrome.google.com/webstore/detail/secure-shell-app/pnhechapfaindjhompbnflcldabbghjo?hl=en) app and the [hterm](https://hterm.org/) based Crostini Terminal app, but you can't do things like launch a new browser window from the desktop with <kbd>Esc</kbd>+<kbd>n</kbd>. If anyone is aware of a global method for key remapping in Chrome OS, let me know!
