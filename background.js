@@ -42,8 +42,18 @@ chrome.input.ime.onKeyEvent.addListener(function(engineID, keyData) {
 
         /* if ctrl is held down, pass along any key inputs with the control key modifier set */
         if (savedCtrlKey) {
+            if (keyData.code == "ShiftLeft" || keyData.code == "ShiftRight") {
+                // save the shift key
+                savedCtrlKey.shiftKey = true;
+                return true;
+            } else if (savedCtrlKey.shiftKey) {
+                keyData.shiftKey = true;
+            }
+
             savedCtrlKey.ctrlKey = true; // used to store ctrl key sent status
             keyData.ctrlKey = true;     // Chrome OS doesn't need a separate ctrl key event
+
+
             chrome.input.ime.sendKeyEvents({"contextID": contextID, "keyData": [keyData]});
             return true;
         }
@@ -52,13 +62,14 @@ chrome.input.ime.onKeyEvent.addListener(function(engineID, keyData) {
 
         /* if we have an escape key down event that we've stored and possibly modified */
         if (keyData.code == "ControlLeft") {
-            if (!savedCtrlKey.ctrlKey) // no other keys were pressed, send escape keydown and keyup
+            if (!savedCtrlKey.ctrlKey) { // no other keys were pressed, send escape keydown and keyup
                 savedCtrlKey.code = "Escape"
                 savedCtrlKey.key = "Esc"
                 keyData.code = "Escape"
                 keyData.key = "Esc"
                 keyData.ctrlKey = false;
                 chrome.input.ime.sendKeyEvents({"contextID": contextID, "keyData": [savedCtrlKey, keyData]});
+            }
 
             /* otherwise escape was used as a ctrl modifier, discard the keyup and keydown events */
             savedCtrlKey = null; // clear saved keydown event
@@ -69,6 +80,9 @@ chrome.input.ime.onKeyEvent.addListener(function(engineID, keyData) {
         if (savedCtrlKey.ctrlKey) {
             keyData.ctrlKey = true;
             chrome.input.ime.sendKeyEvents({"contextID": contextID, "keyData": [keyData]});
+	    if (savedCtrlKey.shiftKey) {
+		savedCtrlKey = null;
+	    }
             return true;
         }
     }
