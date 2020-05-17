@@ -1,8 +1,8 @@
 {
-  "name": "esc2ctrl",
+  "name": "ctrl2esc",
   "version": "1.0",
   "manifest_version": 2,
-  "description": "Map Escape to Control if used as a modifier with another key",
+  "description": "Map Control to Escape if used alone",
   "background": {
     "scripts": ["background.js"]
   },
@@ -11,10 +11,10 @@
   ],
   "input_components": [
     {
-      "name": "esc2ctrl",
+      "name": "ctrl2esc",
       "type": "ime",
-      "id": "esc2ctrl",
-      "description": "Map Escape to Control if used as a modifier with another key",
+      "id": "ctrl2esc",
+      "description": "Map Control to Escape if used as alone",
       "language": "en-US",
       "layouts": ["us"]
     }
